@@ -1,0 +1,10 @@
+[user]
+	signingkey = godilov@tuta.io
+	email = godilov@tuta.io
+	name = German Odilov
+[commit]
+	gpgsign = true
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main

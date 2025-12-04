@@ -1,0 +1,12 @@
+
+2023/09/13 (21:00:29) | ===> btop++ v.1.2.13
+2023/09/13 (21:00:29) | INFO: Logger set to INFO
+2023/09/13 (21:00:30) | INFO: Logger set to DEBUG
+2023/09/13 (21:00:35) | INFO: Logger set to INFO
+
+2023/12/14 (20:15:41) | ===> btop++ v.1.2.13
+2023/12/14 (20:15:41) | ERROR: No tty detected!
+btop++ needs an interactive shell to run.
+
+2024/10/14 (23:15:15) | ===> btop++ v.1.4.0
+2024/10/14 (23:15:15) | ERROR: Stall in Runner thread, restarting!

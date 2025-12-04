@@ -1,0 +1,8 @@
+deps
+pkg/all
+
+config/nvim/lazy-lock.json
+config/retroarch/*
+!config/retroarch/saves
+!config/retroarch/states
+!config/retroarch/retroarch.cfg

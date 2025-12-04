@@ -1,0 +1,58 @@
+[colors.primary]
+background = "#000000"
+foreground = "#FFFFFF"
+
+[colors.bright]
+black   = "#0D0D0D"
+white   = "#F2F2F2"
+red     = "#FFCCCC"
+yellow  = "#FFE6CC"
+green   = "#FFFFCC"
+cyan    = "#CCFFFF"
+blue    = "#CCE6FF"
+magenta = "#FFCCE6"
+
+[colors.normal]
+black   = "#1A1A1A"
+white   = "#E6E6E6"
+red     = "#FF9999"
+yellow  = "#FFCC99"
+green   = "#FFFF99"
+cyan    = "#99FFFF"
+blue    = "#99CCFF"
+magenta = "#FF99CC"
+
+[colors.search.focused_match]
+foreground = "#0D0D0D"
+background = "#FFCCCC"
+
+[colors.search.matches]
+foreground = "#0D0D0D"
+background = "#FFE6CC"
+
+[colors.selection]
+text       = "#0D0D0D"
+background = "#FFE6CC"
+
+[colors.footer_bar]
+foreground = "#0D0D0D"
+background = "#FFE6CC"
+
+[font]
+size = 10.0
+
+[font.bold]
+family = "Fira Code Nerd Font Mono"
+style  = "Bold"
+
+[font.bold_italic]
+family = "Fira Code Nerd Font Mono"
+style  = "Bold Italic"
+
+[font.italic]
+family = "Fira Code Nerd Font Mono"
+style  = "Italic"
+
+[font.normal]
+family = "Fira Code Nerd Font Mono"
+style  = "Regular"

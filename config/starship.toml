@@ -1,0 +1,21 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+[character]
+success_symbol = '[>](bold green)'
+error_symbol   = '[>](bold red)'
+
+[directory]
+style = 'bold yellow'
+
+[git_status]
+conflicted = ""
+ahead      = ""
+behind     = ""
+diverged   = ""
+up_to_date = ""
+untracked  = ""
+modified   = ""
+stashed    = ""
+staged     = ""
+renamed    = ""
+deleted    = ""
