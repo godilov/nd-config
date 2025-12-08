@@ -36,6 +36,7 @@ postgresql
 sqlite
 apache
 nginx-mainline
+flatbuffers
 
 kubectl
 kubeadm
