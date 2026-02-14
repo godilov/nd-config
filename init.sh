@@ -90,9 +90,11 @@ init-dev() {
     cargo install sqlx-cli
     cargo install flamegraph
     cargo install cargo-show-asm
-    cargo install cargo-profiler
     cargo install cargo-nextest
     cargo install cargo-sort
+    cargo install cargo-audit
+    cargo install cargo-deny
+    cargo install cargo-tarpaulin
 
     cargo install asm-lsp
     cargo install --git https://github.com/wgsl-analyzer/wgsl-analyzer wgsl-analyzer
