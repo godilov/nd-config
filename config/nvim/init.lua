@@ -41,6 +41,9 @@ vim.lsp.config('rust_analyzer', {
             rustfmt = {
                 overrideCommand = { 'rustfmt', '+nightly', '--edition', '2024' },
             },
+            cargo = {
+                features = 'all',
+            },
         }
     }
 })
