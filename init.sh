@@ -89,6 +89,7 @@ init-dev() {
 
     cargo install sqlx-cli
     cargo install flamegraph
+    cargo install cargo-cache
     cargo install cargo-show-asm
     cargo install cargo-nextest
     cargo install cargo-sort

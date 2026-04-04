@@ -534,6 +534,7 @@ require 'lazy'.setup {
         },
         {
             'nvim-treesitter/nvim-treesitter',
+            branch = 'master',
             build = ':TSUpdate',
             cmd = { 'TSUpdate', 'TSInstall' },
             event = { 'VeryLazy' },

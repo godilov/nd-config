@@ -22,4 +22,5 @@ i2pd
 curl
 wget
 man-db
+man-pages
 tealdeer
