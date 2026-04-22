@@ -50,6 +50,20 @@ vim.lsp.config('biome', {
     filetypes = { 'html', 'css', 'graphql', 'json', 'jsonc' }
 })
 
+vim.api.nvim_create_autocmd("BufWritePre", {
+    callback = function(_)
+        if vim.lsp.buf_is_attached() then
+            vim.lsp.buf.format()
+        end
+    end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    callback = function(ev)
+        pcall(vim.treesitter.start, ev.buf, ev.match)
+    end
+})
+
 vim.opt.mouse = 'a'
 vim.opt.encoding = 'utf-8'
 vim.opt.spelllang = { 'en' }
@@ -63,7 +77,7 @@ vim.opt.autowriteall = true
 vim.opt.autoindent = true
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 vim.opt.cursorcolumn = false
 vim.opt.splitright = true
 vim.opt.splitbelow = true
@@ -97,6 +111,7 @@ vim.opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus'
 
 require('config.colors').set_editor_hls()
 require('config.colors').set_syntax_hls()
+require('config.colors').set_treesitter_hls()
 
 vim.pack.add {
     { src = 'https://github.com/neovim/nvim-lspconfig.git' },
@@ -261,12 +276,3 @@ vim.keymap.set('n', '<Leader>dq', '<CMD>lua vim.diagnostic.setqflist()<CR>',    
 vim.keymap.set('n', '<Leader>dl', '<CMD>lua vim.diagnostic.setloclist()<CR>',   { noremap = true, silent = true, desc = 'Diagnostic Locations' })
 
 vim.keymap.set('n', '<Esc>', '<CMD>nohlsearch<CR>', { noremap = true })
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*",
-    callback = function(_)
-        if vim.lsp.buf_is_attached() then
-            vim.lsp.buf.format()
-        end
-    end,
-})

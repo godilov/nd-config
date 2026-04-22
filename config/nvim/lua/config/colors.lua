@@ -20,25 +20,25 @@ local palette = {
 }
 
 local diag = {
-    error = { fg = palette[1].red[4] },
-    warn  = { fg = palette[1].yellow[4] },
-    hint  = { fg = palette[1].green[4] },
-    info  = { fg = palette[1].blue[4] },
+    error = { fg = palette[1].red[3] },
+    warn  = { fg = palette[1].yellow[3] },
+    hint  = { fg = palette[1].green[3] },
+    info  = { fg = palette[1].blue[3] },
     ok    = { fg = palette[1].white[1] },
 
     ul    = {
-        error = { sp = palette[1].red[4], underline = true },
-        warn  = { sp = palette[1].yellow[4], underline = true },
-        hint  = { sp = palette[1].green[4], underline = true },
-        info  = { sp = palette[1].blue[4], underline = true },
+        error = { sp = palette[1].red[3], underline = true },
+        warn  = { sp = palette[1].yellow[3], underline = true },
+        hint  = { sp = palette[1].green[3], underline = true },
+        info  = { sp = palette[1].blue[3], underline = true },
         ok    = { sp = palette[1].white[1], underline = true },
     },
 
     virt  = {
-        error = { fg = palette[1].red[4] },
-        warn  = { fg = palette[1].yellow[4] },
-        hint  = { fg = palette[1].green[4] },
-        info  = { fg = palette[1].blue[4] },
+        error = { fg = palette[1].red[3] },
+        warn  = { fg = palette[1].yellow[3] },
+        hint  = { fg = palette[1].green[3] },
+        info  = { fg = palette[1].blue[3] },
         ok    = { fg = palette[1].white[1] },
     },
 }
@@ -100,8 +100,8 @@ local editor = {
 }
 
 local syntax = {
-    ['variable']            = { fg = palette[1].white[1] },
     ['constant']            = { fg = palette[1].white[1] },
+    ['variable']            = { fg = palette[1].white[1] },
 
     ['module']              = { fg = palette[1].yellow[1] },
     ['label']               = { fg = palette[1].yellow[1] },
@@ -117,8 +117,9 @@ local syntax = {
     ['property']            = { fg = palette[1].yellow[2] },
 
     ['function']            = { fg = palette[1].red[3] },
+    ['macro']               = { fg = palette[1].red[3] },
 
-    ['constructor']         = { fg = palette[1].yellow[3] },
+    ['constructor']         = { fg = palette[1].white[1] },
     ['operator']            = { fg = palette[1].white[1] },
 
     ['keyword']             = { fg = palette[1].blue[1] },
@@ -258,11 +259,11 @@ local syntax_hls = {
     { 'Keyword',        syntax['keyword'] },
     { 'Exception',      syntax['keyword'] },
 
-    { 'PreProc',        syntax['function'] },
-    { 'Include',        syntax['keyword'] },
-    { 'Define',         syntax['keyword'] },
-    { 'Macro',          syntax['keyword'] },
-    { 'PreCondit',      syntax['keyword'] },
+    { 'PreProc',        syntax['macro'] },
+    { 'Include',        syntax['macro'] },
+    { 'Define',         syntax['macro'] },
+    { 'Macro',          syntax['macro'] },
+    { 'PreCondit',      syntax['macro'] },
 
     { 'Type',           syntax['type'] },
     { 'StorageClass',   syntax['type'] },
@@ -280,7 +281,7 @@ local syntax_hls = {
 
     { 'Error',          { fg = palette[1].red[4] } },
 
-    { 'Todo',           syntax['comment.note'] },
+    { 'Todo',           syntax['comment.todo'] },
 
     { 'Added',          diff.add },
     { 'Changed',        diff.mod },
