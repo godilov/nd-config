@@ -1,0 +1,13 @@
+{
+  "plugins": {
+    "mini.nvim": {
+      "rev": "5849ef04c32a6a8e55957b946c0a275801d87530",
+      "src": "https://github.com/nvim-mini/mini.nvim.git",
+      "version": "'stable'"
+    },
+    "nvim-lspconfig": {
+      "rev": "e146efacbafed3789ac568abcc5a981c5decaa58",
+      "src": "https://github.com/neovim/nvim-lspconfig.git"
+    }
+  }
+}

@@ -43,14 +43,6 @@ local diag = {
     },
 }
 
-local logs = {
-    error = { fg = palette[1].red[4] },
-    warn  = { fg = palette[1].yellow[4] },
-    info  = { fg = palette[1].blue[4] },
-    debug = { fg = palette[1].cyan[4] },
-    trace = { fg = palette[1].white[6] },
-}
-
 local status = {
     error = { fg = palette[1].red[4] },
     warn  = { fg = palette[1].yellow[4] },
@@ -411,95 +403,26 @@ local treesitter_hls = {
     { '@tag.delimiter',               { fg = palette[1].white[1] } },
 }
 
-local markdown_hls = {
-    { 'RenderMarkdownH1Bg',   markdown.bg['heading.1'] },
-    { 'RenderMarkdownH2Bg',   markdown.bg['heading.2'] },
-    { 'RenderMarkdownH3Bg',   markdown.bg['heading.3'] },
-    { 'RenderMarkdownH4Bg',   markdown.bg['heading.4'] },
-    { 'RenderMarkdownH5Bg',   markdown.bg['heading.5'] },
-    { 'RenderMarkdownH6Bg',   markdown.bg['heading.6'] },
-    { 'RenderMarkdownBullet', { fg = palette[1].yellow[2] } },
-}
-
-local notify_hls = {
-    { 'NotifyERRORBorder', logs.error },
-    { 'NotifyERRORIcon',   logs.error },
-    { 'NotifyERRORTitle',  logs.error },
-    { 'NotifyWARNBorder',  logs.warn },
-    { 'NotifyWARNIcon',    logs.warn },
-    { 'NotifyWARNTitle',   logs.warn },
-    { 'NotifyINFOBorder',  logs.info },
-    { 'NotifyINFOIcon',    logs.info },
-    { 'NotifyINFOTitle',   logs.info },
-    { 'NotifyDEBUGBorder', logs.debug },
-    { 'NotifyDEBUGIcon',   logs.debug },
-    { 'NotifyDEBUGTitle',  logs.debug },
-    { 'NotifyTRACEBorder', logs.trace },
-    { 'NotifyTRACEIcon',   logs.trace },
-    { 'NotifyTRACETitle',  logs.trace },
-}
-
-local function set_hls(groups)
-    for _, v in ipairs(groups) do
+local function set_editor_hls()
+    for _, v in ipairs(editor_hls) do
         vim.api.nvim_set_hl(0, v[1], v[2])
     end
 end
 
-local function set_editor_hls()
-    set_hls(editor_hls)
-end
-
 local function set_syntax_hls()
-    set_hls(syntax_hls)
+    for _, v in ipairs(syntax_hls) do
+        vim.api.nvim_set_hl(0, v[1], v[2])
+    end
 end
 
 local function set_treesitter_hls()
-    set_hls(treesitter_hls)
-end
-
-local function set_markdown_hls()
-    set_hls(markdown_hls)
-end
-
-local function set_notify_hls()
-    set_hls(notify_hls)
-end
-
-local function get_lualine_hls()
-    return {
-        normal  = {
-            a = { fg = palette[2].black[1], bg = palette[1].yellow[4], gui = 'bold' },
-            b = { fg = palette[1].white[1], bg = palette[2].black[4] },
-            c = { fg = palette[1].white[1], bg = palette[2].black[1] },
-        },
-        insert  = {
-            a = { fg = palette[2].black[1], bg = palette[1].red[4], gui = 'bold' },
-            b = { fg = palette[1].white[1], bg = palette[2].black[4] },
-            c = { fg = palette[1].white[1], bg = palette[2].black[1] },
-        },
-        visual  = {
-            a = { fg = palette[2].black[1], bg = palette[1].green[4], gui = 'bold' },
-            b = { fg = palette[1].white[1], bg = palette[2].black[4] },
-            c = { fg = palette[1].white[1], bg = palette[2].black[1] },
-        },
-        replace = {
-            a = { fg = palette[2].black[1], bg = palette[1].cyan[4], gui = 'bold' },
-            b = { fg = palette[1].white[1], bg = palette[2].black[4] },
-            c = { fg = palette[1].white[1], bg = palette[2].black[1] },
-        },
-        command = {
-            a = { fg = palette[2].black[1], bg = palette[1].blue[4], gui = 'bold' },
-            b = { fg = palette[1].white[1], bg = palette[2].black[4] },
-            c = { fg = palette[1].white[1], bg = palette[2].black[1] },
-        },
-    }
+    for _, v in ipairs(treesitter_hls) do
+        vim.api.nvim_set_hl(0, v[1], v[2])
+    end
 end
 
 return {
     set_editor_hls     = set_editor_hls,
     set_syntax_hls     = set_syntax_hls,
     set_treesitter_hls = set_treesitter_hls,
-    set_markdown_hls   = set_markdown_hls,
-    set_notify_hls     = set_notify_hls,
-    get_lualine_hls    = get_lualine_hls,
 }

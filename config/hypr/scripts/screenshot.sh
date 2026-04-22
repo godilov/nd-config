@@ -26,9 +26,14 @@ for arg in "$@"; do
     esac
 done
 
-mkdir -p $DIR
+mkdir -p "$DIR"
 
-[[ $SRC -eq $SRC_SCREEN && $DST -eq $DST_FILE ]] && grim -t png -l 0 - >$FILEPATH && notify-send "$MESSAGE_FILE"
-[[ $SRC -eq $SRC_SCREEN && $DST -eq $DST_CLIP ]] && grim -t png -l 0 - | wl-copy && notify-send "$MESSAGE_CLIP"
-[[ $SRC -eq $SRC_SELECT && $DST -eq $DST_FILE ]] && GEOMETRY="$(slurp)" && grim -t png -l 0 -g "$GEOMETRY" - >$FILEPATH && notify-send "$MESSAGE_FILE"
-[[ $SRC -eq $SRC_SELECT && $DST -eq $DST_CLIP ]] && GEOMETRY="$(slurp)" && grim -t png -l 0 -g "$GEOMETRY" - | wl-copy && notify-send "$MESSAGE_CLIP"
+if [[ $SRC -eq $SRC_SCREEN && $DST -eq $DST_FILE ]]; then
+    grim -t png -l 0 - >"$FILEPATH" && notify-send "$MESSAGE_FILE"
+elif [[ $SRC -eq $SRC_SCREEN && $DST -eq $DST_CLIP ]]; then
+    grim -t png -l 0 - | wl-copy && notify-send "$MESSAGE_CLIP"
+elif [[ $SRC -eq $SRC_SELECT && $DST -eq $DST_FILE ]]; then
+    GEOMETRY="$(slurp)" && grim -t png -l 0 -g "$GEOMETRY" - >"$FILEPATH" && notify-send "$MESSAGE_FILE"
+elif [[ $SRC -eq $SRC_SELECT && $DST -eq $DST_CLIP ]]; then
+    GEOMETRY="$(slurp)" && grim -t png -l 0 -g "$GEOMETRY" - | wl-copy && notify-send "$MESSAGE_CLIP"
+fi

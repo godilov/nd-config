@@ -149,6 +149,22 @@ init-groups() {
     sudo usermod -aG wheel docker gamemode nordvpn "$(whoami)"
 }
 
+init-treesitter() {
+    mkdir -p config/nvim/parser
+    mkdir -p config/nvim/queries
+
+    rm config/nvim/parser/*
+    rm config/nvim/queries/*
+
+    git clone https://github.com/tree-sitter/tree-sitter-rust.git /tmp/tree-sitter-rust &&
+        cd /tmp/tree-sitter-rust &&
+        tree-sitter build &&
+        cp rust.so ~/.config/nvim/parser &&
+        cp -r queries ~/.config/nvim/queries/rust
+        rm -rf /tmp/tree-sitter-rust
+        cd -
+}
+
 for arg in "$@"; do
     case "$arg" in
     "all")
@@ -185,6 +201,9 @@ for arg in "$@"; do
         ;;
     "groups")
         init-groups
+        ;;
+    "treesitter")
+        init-treesitter
         ;;
     "services")
         sudo systemctl enable --now NetworkManager.service
