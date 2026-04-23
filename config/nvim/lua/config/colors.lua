@@ -273,7 +273,7 @@ local syntax_hls = {
     { 'Special',        syntax['literal.special'] },
     { 'SpecialChar',    syntax['literal.special'] },
     { 'Tag',            syntax['literal'] },
-    { 'Delimiter',      syntax['literal'] },
+    { 'Delimiter',      syntax['operator'] },
     { 'SpecialComment', syntax['literal'] },
     { 'Debug',          syntax['literal.special'] },
 

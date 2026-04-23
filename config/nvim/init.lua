@@ -50,20 +50,6 @@ vim.lsp.config('biome', {
     filetypes = { 'html', 'css', 'graphql', 'json', 'jsonc' }
 })
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-    callback = function(_)
-        if vim.lsp.buf_is_attached() then
-            vim.lsp.buf.format()
-        end
-    end,
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-    callback = function(ev)
-        pcall(vim.treesitter.start, ev.buf, ev.match)
-    end
-})
-
 vim.opt.mouse = 'a'
 vim.opt.encoding = 'utf-8'
 vim.opt.spelllang = { 'en' }
@@ -269,10 +255,29 @@ vim.keymap.set('n', '<Leader>flr', function() files.open(vim.api.nvim_buf_get_na
 
 vim.keymap.set('n', '<Leader>qr', function() sessions.read(vim.fn.input('Session: ', 'Session.vim')) end,   { noremap = true, desc = 'Session Read' })
 vim.keymap.set('n', '<Leader>qw', function() sessions.write(vim.fn.input('Session: ', 'Session.vim')) end,  { noremap = true, desc = 'Session Write' })
-vim.keymap.set('n', '<Leader>qs', function() sessions.select('read') end,                                   { noremap = true, desc = 'Session Select' })
+vim.keymap.set('n', '<Leader>qs', function() sessions.select('read') end,                                   { noremap = true, desc = 'Session Select Read' })
+vim.keymap.set('n', '<Leader>qd', function() sessions.select('delete') end,                                 { noremap = true, desc = 'Session Select Delete' })
 vim.keymap.set('n', '<Leader>qq', function() sessions.restart() end,                                        { noremap = true, desc = 'Session Restart' })
 
 vim.keymap.set('n', '<Leader>dq', '<CMD>lua vim.diagnostic.setqflist()<CR>',    { noremap = true, silent = true, desc = 'Diagnostic Quickfix' })
 vim.keymap.set('n', '<Leader>dl', '<CMD>lua vim.diagnostic.setloclist()<CR>',   { noremap = true, silent = true, desc = 'Diagnostic Locations' })
 
 vim.keymap.set('n', '<Esc>', '<CMD>nohlsearch<CR>', { noremap = true })
+
+local group = vim.api.nvim_create_augroup('NdAutocmd', { clear = true })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    group = group,
+    callback = function(_)
+        if vim.lsp.buf_is_attached() then
+            vim.lsp.buf.format()
+        end
+    end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    group = group,
+    callback = function(ev)
+        pcall(vim.treesitter.start, ev.buf, ev.match)
+    end
+})

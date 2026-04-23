@@ -103,6 +103,58 @@ init-dev() {
     go install github.com/docker/docker-language-server/cmd/docker-language-server@latest
 }
 
+init-treesitter() {
+    mkdir -p config/nvim/parser
+    mkdir -p config/nvim/queries
+
+    rm -r config/nvim/parser/*
+    rm -r config/nvim/queries/*
+
+    git clone https://github.com/nvim-treesitter/nvim-treesitter.git /tmp/nvim-treesitter &&
+        cp -r /tmp/nvim-treesitter/runtime/queries/* config/nvim/queries &&
+        rm -rf /tmp/nvim-treesitter
+
+    init-treesitter-parser "https://github.com/tree-sitter/tree-sitter-rust.git" &
+    init-treesitter-parser "https://github.com/tree-sitter/tree-sitter-c.git" &
+    init-treesitter-parser "https://github.com/tree-sitter/tree-sitter-cpp.git" &
+    init-treesitter-parser "https://github.com/RubixDev/tree-sitter-asm.git" &
+    init-treesitter-parser "https://github.com/wasm-lsp/tree-sitter-wasm.git" &
+    init-treesitter-parser "https://github.com/tree-sitter-grammars/tree-sitter-glsl.git" &
+    init-treesitter-parser "https://github.com/tree-sitter-grammars/tree-sitter-hlsl.git" &
+    init-treesitter-parser "https://github.com/gpuweb/tree-sitter-wgsl.git" &
+    init-treesitter-parser "https://github.com/tree-sitter-grammars/tree-sitter-cuda.git" &
+    init-treesitter-parser "https://github.com/tree-sitter/tree-sitter-bash.git" &
+    init-treesitter-parser "https://github.com/georgeharker/tree-sitter-zsh.git" &
+    init-treesitter-parser "https://github.com/tree-sitter/tree-sitter-html.git" &
+    init-treesitter-parser "https://github.com/tree-sitter/tree-sitter-css.git" &
+    init-treesitter-parser "https://github.com/tree-sitter/tree-sitter-json.git" &
+    init-treesitter-parser "https://github.com/Joakker/tree-sitter-json5.git" &
+    init-treesitter-parser "https://github.com/tree-sitter/tree-sitter-javascript.git" &
+    init-treesitter-parser "https://github.com/tree-sitter/tree-sitter-typescript.git" &
+    init-treesitter-parser "https://github.com/DerekStride/tree-sitter-sql.git" &
+    init-treesitter-parser "https://github.com/camdencheek/tree-sitter-dockerfile.git" &
+    init-treesitter-parser "https://github.com/uben0/tree-sitter-typst.git" &
+    init-treesitter-parser "https://github.com/tree-sitter-grammars/tree-sitter-xml.git" &
+    init-treesitter-parser "https://github.com/tree-sitter-grammars/tree-sitter-yaml.git" &
+    init-treesitter-parser "https://github.com/tree-sitter-grammars/tree-sitter-toml.git" &
+
+    wait
+}
+
+init-treesitter-parser() {
+    local url="$1"
+    local dir="/tmp/${url##*/}"
+
+    git clone "$url" "$dir" &&
+        cd "$dir" &&
+        npm install &&
+        tree-sitter generate &&
+        tree-sitter build &&
+        cd - &&
+        cp "$dir"/*.so config/nvim/parser &&
+        rm -rf "$dir"
+}
+
 init-crypto() {
     curl --proto '=https' -L https://foundry.paradigm.xyz | bash
     curl --proto '=https' -L https://release.anza.xyz/stable/install | bash
@@ -167,6 +219,9 @@ for arg in "$@"; do
         ;;
     "dev")
         init-dev
+        ;;
+    "treesitter")
+        init-treesitter
         ;;
     "crypto")
         init-crypto
