@@ -185,13 +185,13 @@ clue.setup {
 }
 
 colors.setup()
-cursorword.setup { delay = 0 }
+cursorword.setup { delay = 100 }
 indentscope.setup {
     draw = {
-        delay = 0,
+        delay = 100,
         animation = indentscope.gen_animation.linear({
             easing = 'in-out',
-            duration = 200,
+            duration = 100,
             unit = 'total',
         }),
     }
@@ -267,10 +267,10 @@ vim.keymap.set('n', '<Leader>fr',  function() files.open(nil, false) end,       
 vim.keymap.set('n', '<Leader>flf', function() files.open(vim.api.nvim_buf_get_name(0)) end,         { noremap = true, desc = 'Files Open Local' })
 vim.keymap.set('n', '<Leader>flr', function() files.open(vim.api.nvim_buf_get_name(0), false) end,  { noremap = true, desc = 'Files Open Local Fresh' })
 
-vim.keymap.set('n', '<Leader>qq', function() sessions.read(vim.fn.input('Session: ', 'Session.vim')) end,   { noremap = true, desc = 'Session Read' })
+vim.keymap.set('n', '<Leader>qr', function() sessions.read(vim.fn.input('Session: ', 'Session.vim')) end,   { noremap = true, desc = 'Session Read' })
 vim.keymap.set('n', '<Leader>qw', function() sessions.write(vim.fn.input('Session: ', 'Session.vim')) end,  { noremap = true, desc = 'Session Write' })
 vim.keymap.set('n', '<Leader>qs', function() sessions.select('read') end,                                   { noremap = true, desc = 'Session Select' })
-vim.keymap.set('n', '<Leader>qr', function() sessions.restart() end,                                        { noremap = true, desc = 'Session Restart' })
+vim.keymap.set('n', '<Leader>qq', function() sessions.restart() end,                                        { noremap = true, desc = 'Session Restart' })
 
 vim.keymap.set('n', '<Leader>dq', '<CMD>lua vim.diagnostic.setqflist()<CR>',    { noremap = true, silent = true, desc = 'Diagnostic Quickfix' })
 vim.keymap.set('n', '<Leader>dl', '<CMD>lua vim.diagnostic.setloclist()<CR>',   { noremap = true, silent = true, desc = 'Diagnostic Locations' })

@@ -119,7 +119,7 @@ local syntax = {
     ['function']            = { fg = palette[1].red[3] },
     ['macro']               = { fg = palette[1].red[3] },
 
-    ['constructor']         = { fg = palette[1].white[1] },
+    ['constructor']         = { fg = palette[1].yellow[3] },
     ['operator']            = { fg = palette[1].white[1] },
 
     ['keyword']             = { fg = palette[1].blue[1] },
