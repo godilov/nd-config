@@ -95,38 +95,39 @@ vim.opt.updatetime = 500
 
 vim.opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus'
 
-require('config.colors').set_editor_hls()
-require('config.colors').set_syntax_hls()
-require('config.colors').set_treesitter_hls()
+require 'config.colors'.set_editor_hls()
+require 'config.colors'.set_syntax_hls()
+require 'config.colors'.set_treesitter_hls()
 
 vim.pack.add {
     { src = 'https://github.com/neovim/nvim-lspconfig.git' },
-    { src = 'https://github.com/nvim-mini/mini.nvim.git', version = 'stable' },
+    { src = 'https://github.com/nvim-mini/mini.nvim.git',  version = 'stable' },
+    { src = 'https://github.com/stevearc/conform.nvim.git' },
 }
 
-local icons         = require('mini.icons')
-local git           = require('mini.git')
-local diff          = require('mini.diff')
-local pick          = require('mini.pick')
-local files         = require('mini.files')
-local extra         = require('mini.extra')
-local snippets      = require('mini.snippets')
-local completion    = require('mini.completion')
-local cmdline       = require('mini.cmdline')
-local pairs         = require('mini.pairs')
-local clue          = require('mini.clue')
+local icons       = require 'mini.icons'
+local git         = require 'mini.git'
+local diff        = require 'mini.diff'
+local pick        = require 'mini.pick'
+local files       = require 'mini.files'
+local extra       = require 'mini.extra'
+local snippets    = require 'mini.snippets'
+local completion  = require 'mini.completion'
+local cmdline     = require 'mini.cmdline'
+local pairs       = require 'mini.pairs'
+local clue        = require 'mini.clue'
 
-local colors        = require('mini.colors')
-local cursorword    = require('mini.cursorword')
-local indentscope   = require('mini.indentscope')
-local hipatterns    = require('mini.hipatterns')
+local colors      = require 'mini.colors'
+local cursorword  = require 'mini.cursorword'
+local indentscope = require 'mini.indentscope'
+local hipatterns  = require 'mini.hipatterns'
 
-local notify        = require('mini.notify')
-local tabline       = require('mini.tabline')
-local statusline    = require('mini.statusline')
-local starter       = require('mini.starter')
-local sessions      = require('mini.sessions')
-local visits        = require('mini.visits')
+local notify      = require 'mini.notify'
+local tabline     = require 'mini.tabline'
+local statusline  = require 'mini.statusline'
+local starter     = require 'mini.starter'
+local sessions    = require 'mini.sessions'
+local visits      = require 'mini.visits'
 
 icons.setup { style = 'ascii' }
 git.setup()
@@ -142,16 +143,16 @@ clue.setup {
     triggers = {
         { mode = { 'n', 'x' }, keys = '<Leader>' },
 
-        { mode = 'n', keys = '[' },
-        { mode = 'n', keys = ']' },
-        { mode = 'n', keys = '<C-w>' },
-        { mode = 'i', keys = '<C-x>' },
+        { mode = 'n',          keys = '[' },
+        { mode = 'n',          keys = ']' },
+        { mode = 'n',          keys = '<C-w>' },
+        { mode = 'i',          keys = '<C-x>' },
 
         { mode = { 'n', 'x' }, keys = 'g' },
         { mode = { 'n', 'x' }, keys = 'z' },
         { mode = { 'n', 'x' }, keys = '"' },
         { mode = { 'n', 'x' }, keys = "'" },
-        { mode = { 'n', 'x' }, keys = "`" },
+        { mode = { 'n', 'x' }, keys = '`' },
         { mode = { 'i', 'c' }, keys = '<C-r>' },
     },
 
@@ -166,7 +167,7 @@ clue.setup {
     },
 
     window = {
-        delay = 0,
+        delay = 100,
     },
 }
 
@@ -175,19 +176,15 @@ cursorword.setup { delay = 100 }
 indentscope.setup {
     draw = {
         delay = 100,
-        animation = indentscope.gen_animation.linear({
-            easing = 'in-out',
-            duration = 100,
-            unit = 'total',
-        }),
+        animation = indentscope.gen_animation.none(),
     }
 }
 
-hipatterns.setup({
+hipatterns.setup {
     highlighters = {
         hex = hipatterns.gen_highlighter.hex_color(),
     },
-})
+}
 
 notify.setup()
 tabline.setup()
@@ -196,87 +193,93 @@ starter.setup()
 sessions.setup()
 visits.setup()
 
-require('mini.keymap').map_multistep('i', '<Tab>',   { 'pmenu_next' })
-require('mini.keymap').map_multistep('i', '<S-Tab>', { 'pmenu_prev' })
-require('mini.keymap').map_multistep('i', '<CR>',    { 'pmenu_accept', 'minipairs_cr' })
-require('mini.keymap').map_multistep('i', '<BS>',    { 'minipairs_bs' })
+require 'mini.keymap'.map_multistep('i', '<Tab>', { 'pmenu_next' })
+require 'mini.keymap'.map_multistep('i', '<S-Tab>', { 'pmenu_prev' })
+require 'mini.keymap'.map_multistep('i', '<CR>', { 'pmenu_accept', 'minipairs_cr' })
+require 'mini.keymap'.map_multistep('i', '<BS>', { 'minipairs_bs' })
 
-vim.keymap.set('v', '<', '<gv', { noremap = true })
-vim.keymap.set('v', '>', '>gv', { noremap = true })
+require 'conform'.setup {
+    formatters_by_ft = {
+        json = { 'jq', 'injected' },
+        markdown = { 'prettier', 'injected' },
+    },
+    format_after_save = {
+        lsp_format = 'fallback'
+    }
+}
 
-vim.keymap.set('n', '<A-h>', '<CMD>bprev<CR>',      { noremap = true, desc = 'Buffer Previous' })
-vim.keymap.set('n', '<A-j>', '<CMD>bdelete<CR>',    { noremap = true, desc = 'Buffer Delete' })
-vim.keymap.set('n', '<A-k>', '<CMD>enew<CR>',       { noremap = true, desc = 'Buffer Create' })
-vim.keymap.set('n', '<A-l>', '<CMD>bnext<CR>',      { noremap = true, desc = 'Buffer Next' })
+local keymaps = {
+    { 'v', '<',           '<gv',                                                                   { noremap = true } },
+    { 'v', '>',           '>gv',                                                                   { noremap = true } },
 
-vim.keymap.set('n', '<C-A-H>', '<CMD>-tabmove<CR>', { noremap = true, desc = 'Tab Move Previous' })
-vim.keymap.set('n', '<C-A-L>', '<CMD>+tabmove<CR>', { noremap = true, desc = 'Tab Move Next' })
-vim.keymap.set('n', '<C-A-h>', '<CMD>tabprev<CR>',  { noremap = true, desc = 'Tab Previous' })
-vim.keymap.set('n', '<C-A-j>', '<CMD>tabclose<CR>', { noremap = true, desc = 'Tab Delete' })
-vim.keymap.set('n', '<C-A-k>', '<CMD>tabnew<CR>',   { noremap = true, desc = 'Tab Create' })
-vim.keymap.set('n', '<C-A-l>', '<CMD>tabnext<CR>',  { noremap = true, desc = 'Tab Next' })
+    { 'n', '<A-h>',       '<CMD>bprev<CR>',                                                        { noremap = true, desc = 'Buffer Previous' } },
+    { 'n', '<A-j>',       '<CMD>bdelete<CR>',                                                      { noremap = true, desc = 'Buffer Delete' } },
+    { 'n', '<A-k>',       '<CMD>enew<CR>',                                                         { noremap = true, desc = 'Buffer Create' } },
+    { 'n', '<A-l>',       '<CMD>bnext<CR>',                                                        { noremap = true, desc = 'Buffer Next' } },
 
-vim.keymap.set('n', '<Leader>sf', '<CMD>Pick files<CR>',                    { noremap = true, desc = 'Search Files' })
-vim.keymap.set('n', '<Leader>se', '<CMD>Pick explorer<CR>',                 { noremap = true, desc = 'Search Explorer' })
-vim.keymap.set('n', '<Leader>s/', '<CMD>Pick grep_live<CR>',                { noremap = true, desc = 'Search Grep (Live)' })
-vim.keymap.set('n', '<Leader>sg', '<CMD>Pick grep<CR>',                     { noremap = true, desc = 'Search Grep' })
-vim.keymap.set('n', '<Leader>sb', '<CMD>Pick buffers<CR>',                  { noremap = true, desc = 'Search Buffers' })
-vim.keymap.set('n', '<Leader>sm', '<CMD>Pick manpages<CR>',                 { noremap = true, desc = 'Search Manpages' })
-vim.keymap.set('n', '<Leader>sh', '<CMD>Pick help<CR>',                     { noremap = true, desc = 'Search Help' })
-vim.keymap.set('n', '<Leader>sH', '<CMD>Pick hl_groups<CR>',                { noremap = true, desc = 'Search Highlights' })
-vim.keymap.set('n', '<Leader>s:', '<CMD>Pick commands<CR>',                 { noremap = true, desc = 'Searc: Commands' })
-vim.keymap.set('n', '<Leader>sc', '<CMD>Pick colorschemes<CR>',             { noremap = true, desc = 'Search Colorschemes' })
-vim.keymap.set('n', '<Leader>sk', '<CMD>Pick keymaps<CR>',                  { noremap = true, desc = 'Search Keymaps' })
-vim.keymap.set('n', '<Leader>sd', '<CMD>Pick diagnostic<CR>',               { noremap = true, desc = 'Search Diagnostic' })
-vim.keymap.set('n', '<Leader>sp', '<CMD>Pick hipatterns<CR>',               { noremap = true, desc = 'Search Patterns' })
-vim.keymap.set('n', '<Leader>sq', '<CMD>Pick list scope="quickfix"<CR>',    { noremap = true, desc = 'Search Quickfix' })
-vim.keymap.set('n', '<Leader>sl', '<CMD>Pick list scope="location"<CR>',    { noremap = true, desc = 'Search Locations' })
-vim.keymap.set('n', '<Leader>sj', '<CMD>Pick list scope="jump"<CR>',        { noremap = true, desc = 'Search Jumps' })
-vim.keymap.set('n', '<Leader>sM', '<CMD>Pick marks<CR>',                    { noremap = true, desc = 'Search Marks' })
-vim.keymap.set('n', '<Leader>sr', '<CMD>Pick registers<CR>',                { noremap = true, desc = 'Search Registers' })
-vim.keymap.set('n', '<Leader>so', '<CMD>Pick options<CR>',                  { noremap = true, desc = 'Search Options' })
+    { 'n', '<C-A-H>',     '<CMD>-tabmove<CR>',                                                     { noremap = true, desc = 'Tab Move Previous' } },
+    { 'n', '<C-A-L>',     '<CMD>+tabmove<CR>',                                                     { noremap = true, desc = 'Tab Move Next' } },
+    { 'n', '<C-A-h>',     '<CMD>tabprev<CR>',                                                      { noremap = true, desc = 'Tab Previous' } },
+    { 'n', '<C-A-j>',     '<CMD>tabclose<CR>',                                                     { noremap = true, desc = 'Tab Delete' } },
+    { 'n', '<C-A-k>',     '<CMD>tabnew<CR>',                                                       { noremap = true, desc = 'Tab Create' } },
+    { 'n', '<C-A-l>',     '<CMD>tabnext<CR>',                                                      { noremap = true, desc = 'Tab Next' } },
 
-vim.keymap.set('n', '<Leader>ld', '<CMD>Pick lsp scope="definition"<CR>',       { noremap = true, desc = 'Search LSP Definition' })
-vim.keymap.set('n', '<Leader>lD', '<CMD>Pick lsp scope="declaration"<CR>',      { noremap = true, desc = 'Search LSP Declaration' })
-vim.keymap.set('n', '<Leader>ls', '<CMD>Pick lsp scope="document_symbol"<CR>',  { noremap = true, desc = 'Search LSP Symbols (Document)' })
-vim.keymap.set('n', '<Leader>lS', '<CMD>Pick lsp scope="workspace_symbol"<CR>', { noremap = true, desc = 'Search LSP Symbols (Workspace)' })
-vim.keymap.set('n', '<Leader>li', '<CMD>Pick lsp scope="implementation"<CR>',   { noremap = true, desc = 'Search LSP Implementation' })
-vim.keymap.set('n', '<Leader>lr', '<CMD>Pick lsp scope="references"<CR>',       { noremap = true, desc = 'Search LSP Reference' })
+    { 'n', '<Leader>sf',  '<CMD>Pick files<CR>',                                                   { noremap = true, desc = 'Search Files' } },
+    { 'n', '<Leader>se',  '<CMD>Pick explorer<CR>',                                                { noremap = true, desc = 'Search Explorer' } },
+    { 'n', '<Leader>s/',  '<CMD>Pick grep_live<CR>',                                               { noremap = true, desc = 'Search Grep (Live)' } },
+    { 'n', '<Leader>sg',  '<CMD>Pick grep<CR>',                                                    { noremap = true, desc = 'Search Grep' } },
+    { 'n', '<Leader>sb',  '<CMD>Pick buffers<CR>',                                                 { noremap = true, desc = 'Search Buffers' } },
+    { 'n', '<Leader>sm',  '<CMD>Pick manpages<CR>',                                                { noremap = true, desc = 'Search Manpages' } },
+    { 'n', '<Leader>sh',  '<CMD>Pick help<CR>',                                                    { noremap = true, desc = 'Search Help' } },
+    { 'n', '<Leader>sH',  '<CMD>Pick hl_groups<CR>',                                               { noremap = true, desc = 'Search Highlights' } },
+    { 'n', '<Leader>s:',  '<CMD>Pick commands<CR>',                                                { noremap = true, desc = 'Searc: Commands' } },
+    { 'n', '<Leader>sc',  '<CMD>Pick colorschemes<CR>',                                            { noremap = true, desc = 'Search Colorschemes' } },
+    { 'n', '<Leader>sk',  '<CMD>Pick keymaps<CR>',                                                 { noremap = true, desc = 'Search Keymaps' } },
+    { 'n', '<Leader>sd',  '<CMD>Pick diagnostic<CR>',                                              { noremap = true, desc = 'Search Diagnostic' } },
+    { 'n', '<Leader>sp',  '<CMD>Pick hipatterns<CR>',                                              { noremap = true, desc = 'Search Patterns' } },
+    { 'n', '<Leader>sq',  '<CMD>Pick list scope="quickfix"<CR>',                                   { noremap = true, desc = 'Search Quickfix' } },
+    { 'n', '<Leader>sl',  '<CMD>Pick list scope="location"<CR>',                                   { noremap = true, desc = 'Search Locations' } },
+    { 'n', '<Leader>sj',  '<CMD>Pick list scope="jump"<CR>',                                       { noremap = true, desc = 'Search Jumps' } },
+    { 'n', '<Leader>sM',  '<CMD>Pick marks<CR>',                                                   { noremap = true, desc = 'Search Marks' } },
+    { 'n', '<Leader>sr',  '<CMD>Pick registers<CR>',                                               { noremap = true, desc = 'Search Registers' } },
+    { 'n', '<Leader>so',  '<CMD>Pick options<CR>',                                                 { noremap = true, desc = 'Search Options' } },
 
-vim.keymap.set('n', '<Leader>gf', '<CMD>Pick git_files<CR>',    { noremap = true, desc = 'Search Git Files' })
-vim.keymap.set('n', '<Leader>gc', '<CMD>Pick git_commits<CR>',  { noremap = true, desc = 'Search Git Commits' })
-vim.keymap.set('n', '<Leader>gb', '<CMD>Pick git_branches<CR>', { noremap = true, desc = 'Search Git Branches' })
-vim.keymap.set('n', '<Leader>gh', '<CMD>Pick git_hunks<CR>',    { noremap = true, desc = 'Search Git Hunks' })
+    { 'n', '<Leader>ld',  '<CMD>Pick lsp scope="definition"<CR>',                                  { noremap = true, desc = 'Search LSP Definition' } },
+    { 'n', '<Leader>lD',  '<CMD>Pick lsp scope="declaration"<CR>',                                 { noremap = true, desc = 'Search LSP Declaration' } },
+    { 'n', '<Leader>ls',  '<CMD>Pick lsp scope="document_symbol"<CR>',                             { noremap = true, desc = 'Search LSP Symbols (Document)' } },
+    { 'n', '<Leader>lS',  '<CMD>Pick lsp scope="workspace_symbol"<CR>',                            { noremap = true, desc = 'Search LSP Symbols (Workspace)' } },
+    { 'n', '<Leader>li',  '<CMD>Pick lsp scope="implementation"<CR>',                              { noremap = true, desc = 'Search LSP Implementation' } },
+    { 'n', '<Leader>lr',  '<CMD>Pick lsp scope="references"<CR>',                                  { noremap = true, desc = 'Search LSP Reference' } },
 
-vim.keymap.set('n', '<Leader>ff',  function() files.open() end,                                     { noremap = true, desc = 'Files Open' })
-vim.keymap.set('n', '<Leader>fr',  function() files.open(nil, false) end,                           { noremap = true, desc = 'Files Open Fresh' })
-vim.keymap.set('n', '<Leader>flf', function() files.open(vim.api.nvim_buf_get_name(0)) end,         { noremap = true, desc = 'Files Open Local' })
-vim.keymap.set('n', '<Leader>flr', function() files.open(vim.api.nvim_buf_get_name(0), false) end,  { noremap = true, desc = 'Files Open Local Fresh' })
+    { 'n', '<Leader>gf',  '<CMD>Pick git_files<CR>',                                               { noremap = true, desc = 'Search Git Files' } },
+    { 'n', '<Leader>gc',  '<CMD>Pick git_commits<CR>',                                             { noremap = true, desc = 'Search Git Commits' } },
+    { 'n', '<Leader>gb',  '<CMD>Pick git_branches<CR>',                                            { noremap = true, desc = 'Search Git Branches' } },
+    { 'n', '<Leader>gh',  '<CMD>Pick git_hunks<CR>',                                               { noremap = true, desc = 'Search Git Hunks' } },
 
-vim.keymap.set('n', '<Leader>qr', function() sessions.read(vim.fn.input('Session: ', 'Session.vim')) end,   { noremap = true, desc = 'Session Read' })
-vim.keymap.set('n', '<Leader>qw', function() sessions.write(vim.fn.input('Session: ', 'Session.vim')) end,  { noremap = true, desc = 'Session Write' })
-vim.keymap.set('n', '<Leader>qs', function() sessions.select('read') end,                                   { noremap = true, desc = 'Session Select Read' })
-vim.keymap.set('n', '<Leader>qd', function() sessions.select('delete') end,                                 { noremap = true, desc = 'Session Select Delete' })
-vim.keymap.set('n', '<Leader>qq', function() sessions.restart() end,                                        { noremap = true, desc = 'Session Restart' })
+    { 'n', '<Leader>ff',  function() files.open() end,                                             { noremap = true, desc = 'Files Open' } },
+    { 'n', '<Leader>fr',  function() files.open(nil, false) end,                                   { noremap = true, desc = 'Files Open Fresh' } },
+    { 'n', '<Leader>flf', function() files.open(vim.api.nvim_buf_get_name(0)) end,                 { noremap = true, desc = 'Files Open Local' } },
+    { 'n', '<Leader>flr', function() files.open(vim.api.nvim_buf_get_name(0), false) end,          { noremap = true, desc = 'Files Open Local Fresh' } },
 
-vim.keymap.set('n', '<Leader>dq', '<CMD>lua vim.diagnostic.setqflist()<CR>',    { noremap = true, silent = true, desc = 'Diagnostic Quickfix' })
-vim.keymap.set('n', '<Leader>dl', '<CMD>lua vim.diagnostic.setloclist()<CR>',   { noremap = true, silent = true, desc = 'Diagnostic Locations' })
+    { 'n', '<Leader>qr',  function() sessions.read(vim.fn.input('Session: ', 'Session.vim')) end,  { noremap = true, desc = 'Session Read' } },
+    { 'n', '<Leader>qw',  function() sessions.write(vim.fn.input('Session: ', 'Session.vim')) end, { noremap = true, desc = 'Session Write' } },
+    { 'n', '<Leader>qs',  function() sessions.select 'read' end,                                   { noremap = true, desc = 'Session Select Read' } },
+    { 'n', '<Leader>qd',  function() sessions.select 'delete' end,                                 { noremap = true, desc = 'Session Select Delete' } },
+    { 'n', '<Leader>qq',  function() sessions.restart() end,                                       { noremap = true, desc = 'Session Restart' } },
 
-vim.keymap.set('n', '<Esc>', '<CMD>nohlsearch<CR>', { noremap = true })
+    { 'n', '<Leader>dq',  '<CMD>lua vim.diagnostic.setqflist()<CR>',                               { noremap = true, silent = true, desc = 'Diagnostic Quickfix' } },
+    { 'n', '<Leader>dl',  '<CMD>lua vim.diagnostic.setloclist()<CR>',                              { noremap = true, silent = true, desc = 'Diagnostic Locations' } },
 
-local group = vim.api.nvim_create_augroup('NdAutocmd', { clear = true })
+    { 'n', '<Esc>',       '<CMD>nohlsearch<CR>',                                                   { noremap = true } },
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-    group = group,
-    callback = function(_)
-        if vim.lsp.buf_is_attached() then
-            vim.lsp.buf.format()
-        end
-    end,
-})
+}
+
+for _, keymap in ipairs(keymaps) do
+    vim.keymap.set(keymap[1], keymap[2], keymap[3], keymap[4])
+end
 
 vim.api.nvim_create_autocmd('FileType', {
-    group = group,
+    group = vim.api.nvim_create_augroup('NdAutocmd', { clear = true }),
     callback = function(ev)
         pcall(vim.treesitter.start, ev.buf, ev.match)
     end
