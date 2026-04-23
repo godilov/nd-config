@@ -200,6 +200,7 @@ require 'mini.keymap'.map_multistep('i', '<BS>', { 'minipairs_bs' })
 
 require 'conform'.setup {
     formatters_by_ft = {
+        rust = { 'rustfmt', 'injected' },
         json = { 'jq', 'injected' },
         markdown = { 'prettier', 'injected' },
     },
