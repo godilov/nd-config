@@ -114,8 +114,13 @@ local extra       = require 'mini.extra'
 local snippets    = require 'mini.snippets'
 local completion  = require 'mini.completion'
 local cmdline     = require 'mini.cmdline'
-local pairs       = require 'mini.pairs'
 local clue        = require 'mini.clue'
+
+local ai          = require 'mini.ai'
+local move        = require 'mini.move'
+local align       = require 'mini.align'
+local pairs       = require 'mini.pairs'
+local bracketed   = require 'mini.bracketed'
 
 local colors      = require 'mini.colors'
 local cursorword  = require 'mini.cursorword'
@@ -125,7 +130,6 @@ local hipatterns  = require 'mini.hipatterns'
 local notify      = require 'mini.notify'
 local tabline     = require 'mini.tabline'
 local statusline  = require 'mini.statusline'
-local starter     = require 'mini.starter'
 local sessions    = require 'mini.sessions'
 local visits      = require 'mini.visits'
 
@@ -138,7 +142,6 @@ extra.setup()
 snippets.setup()
 completion.setup()
 cmdline.setup()
-pairs.setup()
 clue.setup {
     triggers = {
         { mode = { 'n', 'x' }, keys = '<Leader>' },
@@ -171,6 +174,12 @@ clue.setup {
     },
 }
 
+ai.setup()
+move.setup()
+align.setup()
+pairs.setup()
+bracketed.setup()
+
 colors.setup()
 cursorword.setup { delay = 100 }
 indentscope.setup {
@@ -189,7 +198,6 @@ hipatterns.setup {
 notify.setup()
 tabline.setup()
 statusline.setup()
-starter.setup()
 sessions.setup()
 visits.setup()
 
@@ -210,20 +218,10 @@ require 'conform'.setup {
 }
 
 local keymaps = {
-    { 'v', '<',           '<gv',                                                                   { noremap = true } },
-    { 'v', '>',           '>gv',                                                                   { noremap = true } },
-
-    { 'n', '<A-h>',       '<CMD>bprev<CR>',                                                        { noremap = true, desc = 'Buffer Previous' } },
-    { 'n', '<A-j>',       '<CMD>bdelete<CR>',                                                      { noremap = true, desc = 'Buffer Delete' } },
-    { 'n', '<A-k>',       '<CMD>enew<CR>',                                                         { noremap = true, desc = 'Buffer Create' } },
-    { 'n', '<A-l>',       '<CMD>bnext<CR>',                                                        { noremap = true, desc = 'Buffer Next' } },
-
-    { 'n', '<C-A-H>',     '<CMD>-tabmove<CR>',                                                     { noremap = true, desc = 'Tab Move Previous' } },
-    { 'n', '<C-A-L>',     '<CMD>+tabmove<CR>',                                                     { noremap = true, desc = 'Tab Move Next' } },
-    { 'n', '<C-A-h>',     '<CMD>tabprev<CR>',                                                      { noremap = true, desc = 'Tab Previous' } },
-    { 'n', '<C-A-j>',     '<CMD>tabclose<CR>',                                                     { noremap = true, desc = 'Tab Delete' } },
-    { 'n', '<C-A-k>',     '<CMD>tabnew<CR>',                                                       { noremap = true, desc = 'Tab Create' } },
-    { 'n', '<C-A-l>',     '<CMD>tabnext<CR>',                                                      { noremap = true, desc = 'Tab Next' } },
+    { 'n', '<A-H>',       '<CMD>bprev<CR>',                                                        { noremap = true, desc = 'Buffer Previous' } },
+    { 'n', '<A-J>',       '<CMD>bdelete<CR>',                                                      { noremap = true, desc = 'Buffer Delete' } },
+    { 'n', '<A-K>',       '<CMD>enew<CR>',                                                         { noremap = true, desc = 'Buffer Create' } },
+    { 'n', '<A-L>',       '<CMD>bnext<CR>',                                                        { noremap = true, desc = 'Buffer Next' } },
 
     { 'n', '<Leader>sf',  '<CMD>Pick files<CR>',                                                   { noremap = true, desc = 'Search Files' } },
     { 'n', '<Leader>se',  '<CMD>Pick explorer<CR>',                                                { noremap = true, desc = 'Search Explorer' } },
@@ -271,8 +269,10 @@ local keymaps = {
     { 'n', '<Leader>dq',  '<CMD>lua vim.diagnostic.setqflist()<CR>',                               { noremap = true, silent = true, desc = 'Diagnostic Quickfix' } },
     { 'n', '<Leader>dl',  '<CMD>lua vim.diagnostic.setloclist()<CR>',                              { noremap = true, silent = true, desc = 'Diagnostic Locations' } },
 
-    { 'n', '<Esc>',       '<CMD>nohlsearch<CR>',                                                   { noremap = true } },
+    { 'n', '<Leader>/',   '<CMD>24split term://zsh<CR>',                                           { noremap = true, desc = 'Terminal' } },
 
+    { 'n', '<Esc>',       '<CMD>nohlsearch<CR>',                                                   { noremap = true } },
+    { 't', '<Esc>',       '<C-\\><C-N>',                                                           { noremap = true } },
 }
 
 for _, keymap in ipairs(keymaps) do
