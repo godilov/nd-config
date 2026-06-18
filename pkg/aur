@@ -1,19 +1,17 @@
-codelldb-bin
 scc-bin
-bun-bin
 kind-bin
 
 solidity-bin
 solidity-language-server
 glsl_analyzer-bin
 postgrestools-bin
-hyprls-git
 
 asdf-vm
 radicle-bin
 radicle-cli-bin
 radicle-node-bin
 
+helium-browser-bin
 brave-bin
 nordvpn-bin
 session-desktop-bin
@@ -29,8 +27,5 @@ all-repository-fonts
 
 gnome-ssh-askpass4-git
 
-elephant-bin
-elephant-all-bin
-walker
 eww
 wl-screenrec

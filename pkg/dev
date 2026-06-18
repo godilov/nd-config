@@ -34,6 +34,7 @@ yarn
 deno
 biome
 
+podman
 docker
 docker-buildx
 docker-compose
