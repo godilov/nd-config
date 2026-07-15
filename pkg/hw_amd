@@ -4,3 +4,5 @@ libva-utils
 vdpauinfo
 vulkan-radeon
 radeontop
+rocm-smi-lib
+amdsmi

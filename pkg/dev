@@ -5,6 +5,7 @@ clang
 gcc
 gdb
 perf
+valgrind
 
 rustup
 lua
@@ -66,3 +67,4 @@ tree-sitter
 tree-sitter-cli
 
 ollama
+ollama-vulkan
