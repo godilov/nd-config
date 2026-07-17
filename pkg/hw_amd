@@ -3,6 +3,6 @@ mesa-utils
 libva-utils
 vdpauinfo
 vulkan-radeon
-radeontop
+amdgpu_top
 rocm-smi-lib
 amdsmi
