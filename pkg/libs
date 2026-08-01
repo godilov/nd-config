@@ -4,13 +4,14 @@ wl-clipboard
 
 gstreamer
 gstreamer-vaapi
+gst-libav
 gst-plugins-base
 gst-plugins-good
-gst-plugin-va
+gst-plugins-ugly
 gst-plugin-pipewire
+gst-plugin-va
 
 pipewire
-pipewire-docs
 pipewire-audio
 pipewire-alsa
 pipewire-pulse
@@ -36,3 +37,4 @@ polkit-gnome
 
 papirus-icon-theme
 orchis-theme
+browserpass

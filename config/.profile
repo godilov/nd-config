@@ -21,7 +21,7 @@ export AMD_VULKAN_ICD=RADV
 export LIBVA_DRIVER_NAME=radeonsi
 export VDPAU_DRIVER=radeonsi
 
-export SSH_ASKPASS=/usr/lib/ssh/gnome-ssh-askpass4
+export SSH_ASKPASS=/usr/lib/gcr4-ssh-askpass
 export SSH_ASKPASS_REQUIRE='prefer'
 
 export RIPGREP_CONFIG_PATH=~/.config/ripgreprc

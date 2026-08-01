@@ -75,7 +75,7 @@ install-pkg() {
 }
 
 init-pkg() {
-    cat pkg/init pkg/libs pkg/dev pkg/cli pkg/hypr pkg/apps >pkg/all
+    cat pkg/init pkg/libs pkg/dev pkg/cli pkg/env pkg/apps >pkg/all
 
     install-pkg pkg/all
 }
@@ -200,7 +200,7 @@ init-apps() {
 }
 
 init-groups() {
-    sudo usermod -aG wheel docker gamemode nordvpn "$(whoami)"
+    sudo usermod -aG wheel docker nordvpn "$(whoami)"
 }
 
 for arg in "$@"; do
@@ -265,7 +265,7 @@ for arg in "$@"; do
         sudo reflector --sort rate --threads 128 --fastest 128 --latest 1024 --protocol https --save /etc/pacman.d/mirrorlist
         ;;
     "diff")
-        cat pkg/init pkg/libs pkg/dev pkg/cli pkg/hypr pkg/apps pkg/games pkg/aur | grep -E --color=never "^[a-zA-Z0-9_-]+$" | sort >pkg/all.diff1
+        cat pkg/init pkg/libs pkg/dev pkg/cli pkg/env pkg/apps pkg/aur | grep -E --color=never "^[a-zA-Z0-9_-]+$" | sort >pkg/all.diff1
 
         pacman -Qeq >pkg/all.diff2
 

@@ -15,19 +15,15 @@ go
 zig
 ghc
 ghc-libs
-stack
-cabal-install
-dotnet-sdk
-dotnet-runtime
 python
 
 base-devel
 vulkan-devel
 libuv
 glfw
-grpc
-buf
 
+buf
+grpc
 nodejs
 npm
 pnpm
@@ -49,12 +45,12 @@ kubectl
 kubeadm
 kubelet
 minikube
+kind
 helm
 
 yaml-language-server
 bash-language-server
 lua-language-server
-haskell-language-server
 taplo-cli
 marksman
 tinymist

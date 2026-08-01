@@ -10,7 +10,6 @@ vim.lsp.enable {
     'solidity_ls_nomicfoundation',
     'postgres_lsp',
 
-    'hls',
     'bashls',
     'lua_ls',
     'buf_ls',

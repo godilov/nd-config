@@ -7,7 +7,6 @@ mpd
 mpc
 mpv
 imv
-transmission-cli
 typst
 
 fd
@@ -49,6 +48,6 @@ udiskie
 gvfs
 gvfs-mtp
 
-vkmark
 stress
+vkmark
 hyperfine

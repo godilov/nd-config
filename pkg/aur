@@ -1,5 +1,4 @@
 scc-bin
-kind-bin
 
 solidity-bin
 solidity-language-server
@@ -11,21 +10,9 @@ radicle-bin
 radicle-cli-bin
 radicle-node-bin
 
-helium-browser-bin
-brave-bin
 nordvpn-bin
-session-desktop-bin
-
-rpcs3-bin
-proton-ge-custom-bin
-protontricks
-xpadneo-dkms-git
-xboxdrv
 
 bibata-cursor-theme-bin
 all-repository-fonts
 
-gnome-ssh-askpass4-git
-
 eww
-wl-screenrec
