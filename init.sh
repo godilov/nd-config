@@ -86,6 +86,7 @@ init-dev() {
 
     rustup component add rustfmt
     rustup component add rustfmt --toolchain nightly
+    rustup component add miri --toolchain nightly
 
     cargo install sqlx-cli
     cargo install flamegraph
@@ -93,7 +94,6 @@ init-dev() {
     cargo install cargo-expand
     cargo install cargo-show-asm
     cargo install cargo-nextest
-    cargo install cargo-miri
     cargo install cargo-sort
     cargo install cargo-audit
     cargo install cargo-deny
