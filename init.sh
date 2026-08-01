@@ -93,6 +93,7 @@ init-dev() {
     cargo install cargo-expand
     cargo install cargo-show-asm
     cargo install cargo-nextest
+    cargo install cargo-miri
     cargo install cargo-sort
     cargo install cargo-audit
     cargo install cargo-deny
